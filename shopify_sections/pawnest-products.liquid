@@ -1,0 +1,173 @@
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+    .pawnest-prods-{{ section.id }} { font-family: 'Outfit', sans-serif; background: {{ section.settings.bg_color }}; padding-top: 20px; padding-bottom: 80px; }
+    .section-header-prod-{{ section.id }} { text-align: left; padding: 20px 5% 40px; }
+    .section-header-prod-{{ section.id }} h3 { 
+        font-family: 'Oswald', sans-serif;
+        font-size: 42px; 
+        font-weight: 800; 
+        color: #111111; 
+        margin: 0; 
+        text-transform: uppercase;
+        letter-spacing: -0.5px;
+    }
+
+    .product-grid-{{ section.id }} { display: grid; grid-template-columns: repeat(4, 1fr); gap: 30px; padding: 0 5%; }
+    .product-card-{{ section.id }} { 
+        background: white; 
+        border-radius: 12px; 
+        padding: 20px; 
+        box-shadow: 0 4px 15px rgba(0,0,0,0.04); 
+        transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); 
+        text-decoration: none; 
+        display: flex; 
+        flex-direction: column;
+        border: 1px solid rgba(0,0,0,0.03);
+    }
+    .product-card-{{ section.id }}:hover { 
+        transform: translateY(-8px); 
+        box-shadow: 0 15px 35px rgba(0,0,0,0.08); 
+    }
+    
+    .product-img-{{ section.id }} { 
+        height: 280px; 
+        border-radius: 8px; 
+        margin-bottom: 20px; 
+        background-size: cover; 
+        background-position: center; 
+        background-color: #f9f9f9;
+        overflow: hidden;
+    }
+    .product-img-{{ section.id }} img {
+        transition: transform 0.5s ease;
+    }
+    .product-card-{{ section.id }}:hover .product-img-{{ section.id }} img {
+        transform: scale(1.05);
+    }
+
+    .product-card-{{ section.id }} h4 { 
+        font-family: 'Oswald', sans-serif;
+        font-size: 20px; 
+        font-weight: 600; 
+        color: #111111; 
+        margin-bottom: 12px; 
+        display: -webkit-box; 
+        -webkit-line-clamp: 2; 
+        -webkit-box-orient: vertical; 
+        overflow: hidden; 
+        line-height: 1.3;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        flex-grow: 1;
+    }
+    
+    .price-row-{{ section.id }} { display: flex; justify-content: space-between; align-items: center; margin-top: auto;}
+    .price-{{ section.id }} { font-size: 22px; font-weight: 700; color: #111111; }
+    
+    .add-form-{{ section.id }} { margin: 0; }
+    .add-btn-{{ section.id }} { 
+        background: #D91C29; 
+        color: white; 
+        padding: 10px 20px; 
+        border-radius: 4px; 
+        border: none; 
+        cursor: pointer; 
+        font-weight: 700; 
+        font-family: 'Oswald', sans-serif;
+        font-size: 16px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        display: flex; 
+        align-items: center; 
+        gap: 5px; 
+        transition: background 0.3s; 
+    }
+    .add-btn-{{ section.id }}:hover { background: #b01520; }
+    .add-btn-{{ section.id }} .icon { display: none; }
+
+    @media (max-width: 1024px) {
+        .product-grid-{{ section.id }} { grid-template-columns: repeat(3, 1fr); }
+    }
+
+    @media (max-width: 768px) {
+        .pawnest-prods-{{ section.id }} { padding-bottom: 40px; }
+        .section-header-prod-{{ section.id }} { padding: 10px 20px 20px; }
+        .section-header-prod-{{ section.id }} h3 { font-size: 28px; }
+        
+        .product-grid-{{ section.id }} { grid-template-columns: 1fr 1fr; gap: 15px; padding: 0 20px; }
+        .product-card-{{ section.id }} { padding: 15px; border-radius: 8px; }
+        .product-img-{{ section.id }} { height: 160px; border-radius: 6px; margin-bottom: 12px; }
+        .product-card-{{ section.id }} h4 { font-size: 16px; }
+        .price-{{ section.id }} { font-size: 18px; }
+        
+        .add-btn-{{ section.id }} { width: 36px; height: 36px; padding: 0; border-radius: 4px; justify-content: center; }
+        .add-btn-{{ section.id }} .text { display: none; }
+        .add-btn-{{ section.id }} .icon { display: block !important; font-size: 20px; }
+    }
+</style>
+
+<div class="pawnest-prods-{{ section.id }}">
+    <div class="section-header-prod-{{ section.id }}">
+        <h3>{{ section.settings.title }}</h3>
+    </div>
+    
+    <div class="product-grid-{{ section.id }}">
+        {% assign collection = collections[section.settings.collection] %}
+        
+        {% if collection != blank and collection.products_count > 0 %}
+            {% for product in collection.products limit: section.settings.limit %}
+                <div class="product-card-{{ section.id }}">
+                    <a href="{{ product.url }}" style="text-decoration: none; display: flex; flex-direction: column; flex-grow: 1;">
+                        <div class="product-img-{{ section.id }}">
+                            {% if product.featured_image != blank %}
+                                <img src="{{ product.featured_image | img_url: '600x600', crop: 'center' }}" style="width: 100%; height: 100%; object-fit: cover; border-radius: inherit;" alt="{{ product.title | escape }}">
+                            {% else %}
+                                <div style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: #f9f9f9; color: #999;">No Image</div>
+                            {% endif %}
+                        </div>
+                        <h4>{{ product.title }}</h4>
+                    </a>
+                    <div class="price-row-{{ section.id }}">
+                        <div class="price-{{ section.id }}">{{ product.price | money }}</div>
+                        <form method="post" action="/cart/add" class="add-form-{{ section.id }}">
+                            <input type="hidden" name="id" value="{{ product.variants.first.id }}" />
+                            <button type="submit" class="add-btn-{{ section.id }}">
+                                <span class="text">Add</span>
+                                <span class="material-icons-round icon">add_shopping_cart</span>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <!-- Demo Content -->
+            {% for i in (1..4) %}
+                <div class="product-card-{{ section.id }}">
+                    <div class="product-img-{{ section.id }}"></div>
+                    <h4>Classic Gold Toy</h4>
+                    <div class="price-row-{{ section.id }}">
+                        <div class="price-{{ section.id }}">$24.99</div>
+                        <button class="add-btn-{{ section.id }}">
+                            <span class="text">Add</span>
+                            <span class="material-icons-round icon">add_shopping_cart</span>
+                        </button>
+                    </div>
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+</div>
+
+{% schema %}
+{
+  "name": "App-Style Products",
+  "settings": [
+    { "type": "text", "id": "title", "label": "Title", "default": "OUR FAVORITES" },
+    { "type": "collection", "id": "collection", "label": "Select Collection" },
+    { "type": "range", "id": "limit", "min": 4, "max": 48, "step": 4, "label": "Product Limit", "default": 8 },
+    { "type": "color", "id": "bg_color", "label": "Background Color", "default": "#ffffff" }
+  ],
+  "presets": [ { "name": "App-Style Products", "category": "PawNest" } ]
+}
+{% endschema %}

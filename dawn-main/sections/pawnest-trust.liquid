@@ -1,0 +1,103 @@
+<style>
+  .trust-section-{{ section.id }} {
+      background: {{ section.settings.bg_color }};
+      color: {{ section.settings.text_color }};
+      padding: 80px 5%;
+      text-align: center;
+      font-family: 'Outfit', sans-serif;
+  }
+  .trust-title-{{ section.id }} {
+      font-size: 36px;
+      margin-bottom: 50px;
+      font-weight: 800;
+  }
+  .trust-title-{{ section.id }} span {
+      color: {{ section.settings.highlight_color }};
+  }
+  .trust-grid-{{ section.id }} {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 40px;
+  }
+  .trust-item-{{ section.id }} h3 {
+      font-size: 20px;
+      margin: 15px 0 10px;
+      color: {{ section.settings.highlight_color }};
+  }
+  .trust-item-{{ section.id }} p {
+      color: rgba(255,255,255,0.7);
+      font-size: 15px;
+      line-height: 1.5;
+  }
+</style>
+
+<div class="trust-section-{{ section.id }}">
+  <h2 class="trust-title-{{ section.id }}">{{ section.settings.title_part_1 }} <span>{{ section.settings.title_highlight }}</span></h2>
+  
+  <div class="trust-grid-{{ section.id }}">
+      <div class="trust-item-{{ section.id }}">
+          <h1 style="font-size: 40px; margin-bottom: 10px;">🌍</h1>
+          <h3>Global Shipping</h3>
+          <p>Fast and reliable delivery directly to the US, UK, Australia, and UAE.</p>
+      </div>
+      <div class="trust-item-{{ section.id }}">
+          <h1 style="font-size: 40px; margin-bottom: 10px;">⭐</h1>
+          <h3>Premium Quality</h3>
+          <p>All products sourced from top-tier suppliers.</p>
+      </div>
+      <div class="trust-item-{{ section.id }}">
+          <h1 style="font-size: 40px; margin-bottom: 10px;">🔒</h1>
+          <h3>Secure Checkout</h3>
+          <p>Your payments are 100% safe with our encrypted payment gateways.</p>
+      </div>
+      <div class="trust-item-{{ section.id }}">
+          <h1 style="font-size: 40px; margin-bottom: 10px;">💬</h1>
+          <h3>24/7 Support</h3>
+          <p>Our dedicated team is here to help you anytime, anywhere.</p>
+      </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "PawNest Trust Badges",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title_part_1",
+      "label": "Title Part 1",
+      "default": "Why Shop at"
+    },
+    {
+      "type": "text",
+      "id": "title_highlight",
+      "label": "Highlighted Title",
+      "default": "PawNest?"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#2C3E50"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "highlight_color",
+      "label": "Highlight Color",
+      "default": "#FFE5DF"
+    }
+  ],
+  "presets": [
+    {
+      "name": "PawNest Trust Badges",
+      "category": "Custom Sections"
+    }
+  ]
+}
+{% endschema %}

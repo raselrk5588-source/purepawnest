@@ -1,0 +1,118 @@
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+    .pawnest-cats-{{ section.id }} { font-family: 'Outfit', sans-serif; background: {{ section.settings.bg_color }}; padding-top: 40px; padding-bottom: 20px;}
+    .section-header-{{ section.id }} { text-align: left; padding: 40px 5% 30px; display: flex; justify-content: space-between; align-items: flex-end;}
+    .section-header-{{ section.id }} h3 { 
+        font-family: 'Oswald', sans-serif;
+        font-size: 42px; 
+        font-weight: 800; 
+        color: #111111; 
+        margin: 0; 
+        text-transform: uppercase;
+        letter-spacing: -0.5px;
+    }
+    .section-header-{{ section.id }} a { 
+        color: #D91C29; 
+        text-decoration: none; 
+        font-weight: 700; 
+        font-size: 16px; 
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        border-bottom: 2px solid #D91C29;
+        padding-bottom: 2px;
+        transition: color 0.3s, border-color 0.3s;
+    }
+    .section-header-{{ section.id }} a:hover {
+        color: #111111;
+        border-color: #111111;
+    }
+
+    .cat-container-{{ section.id }} { display: grid; grid-template-columns: repeat(4, 1fr); gap: 30px; padding: 0 5%; }
+    .cat-item-{{ section.id }} { 
+        background: white; 
+        border-radius: 12px; 
+        padding: 40px 20px; 
+        text-align: center; 
+        box-shadow: 0 4px 20px rgba(0,0,0,0.04); 
+        transition: transform 0.3s, box-shadow 0.3s; 
+        text-decoration: none; 
+        display: block;
+        border: 1px solid rgba(0,0,0,0.03);
+    }
+    .cat-item-{{ section.id }}:hover { 
+        transform: translateY(-8px); 
+        box-shadow: 0 10px 30px rgba(217, 28, 41, 0.1); 
+        border-color: rgba(217, 28, 41, 0.2);
+    }
+    .cat-icon-{{ section.id }} { font-size: 55px; margin-bottom: 20px; display: block; transition: transform 0.3s; }
+    .cat-item-{{ section.id }}:hover .cat-icon-{{ section.id }} { transform: scale(1.1); }
+    .cat-item-{{ section.id }} span { 
+        font-family: 'Oswald', sans-serif;
+        font-size: 22px; 
+        font-weight: 700; 
+        color: #111111; 
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    @media (max-width: 990px) {
+        .section-header-{{ section.id }} h3 { font-size: 32px; }
+        .cat-container-{{ section.id }} { grid-template-columns: repeat(2, 1fr); gap: 20px; }
+    }
+
+    @media (max-width: 768px) {
+        .section-header-{{ section.id }} { padding: 30px 20px 20px; flex-direction: column; align-items: flex-start; gap: 10px;}
+        .section-header-{{ section.id }} h3 { font-size: 28px; line-height: 1.2;}
+        
+        .cat-container-{{ section.id }} { display: flex; overflow-x: auto; gap: 15px; padding: 0 20px 20px; scroll-snap-type: x mandatory; scrollbar-width: none; }
+        .cat-container-{{ section.id }}::-webkit-scrollbar { display: none; }
+        .cat-item-{{ section.id }} { flex: 0 0 calc(45% - 10px); scroll-snap-align: start; padding: 25px 15px; }
+        .cat-icon-{{ section.id }} { font-size: 40px; margin-bottom: 12px; }
+        .cat-item-{{ section.id }} span { font-size: 18px; }
+    }
+</style>
+
+<div class="pawnest-cats-{{ section.id }}">
+    <div class="section-header-{{ section.id }}">
+        <h3>{{ section.settings.title }}</h3>
+        <a href="{{ section.settings.link }}">Shop All Categories</a>
+    </div>
+    <div class="cat-container-{{ section.id }}">
+        {% for block in section.blocks %}
+            <a href="{{ block.settings.cat_link }}" class="cat-item-{{ section.id }}" {{ block.shopify_attributes }}>
+                <div class="cat-icon-{{ section.id }}">{{ block.settings.icon }}</div>
+                <span>{{ block.settings.title }}</span>
+            </a>
+        {% endfor %}
+    </div>
+</div>
+
+{% schema %}
+{
+  "name": "App-Style Categories",
+  "settings": [
+    { "type": "text", "id": "title", "label": "Title", "default": "FIND EVERYTHING YOUR PET NEEDS TO THRIVE" },
+    { "type": "url", "id": "link", "label": "See All Link" },
+    { "type": "color", "id": "bg_color", "label": "Background Color", "default": "#ffffff" }
+  ],
+  "blocks": [
+    {
+      "type": "category",
+      "name": "Category",
+      "limit": 6,
+      "settings": [
+        { "type": "text", "id": "icon", "label": "Emoji Icon", "default": "🥩" },
+        { "type": "text", "id": "title", "label": "Category Name", "default": "TREATS" },
+        { "type": "url", "id": "cat_link", "label": "Category Link" }
+      ]
+    }
+  ],
+  "presets": [
+    { 
+      "name": "App-Style Categories", 
+      "category": "PawNest",
+      "blocks": [ { "type": "category" }, { "type": "category" }, { "type": "category" }, { "type": "category" } ]
+    }
+  ]
+}
+{% endschema %}

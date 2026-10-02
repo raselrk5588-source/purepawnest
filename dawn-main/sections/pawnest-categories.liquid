@@ -1,0 +1,69 @@
+<style>
+    .pawnest-cats-{{ section.id }} { font-family: 'Outfit', sans-serif; background: {{ section.settings.bg_color }}; }
+    .section-header-{{ section.id }} { display: flex; justify-content: space-between; align-items: center; padding: 60px 5% 30px; }
+    .section-header-{{ section.id }} h3 { font-size: 36px; font-weight: 800; color: #2C3E50; margin: 0; }
+    .section-header-{{ section.id }} a { color: #FF7E67; text-decoration: none; font-weight: 600; font-size: 18px; }
+
+    .cat-container-{{ section.id }} { display: grid; grid-template-columns: repeat(4, 1fr); gap: 30px; padding: 0 5%; }
+    .cat-item-{{ section.id }} { background: white; border-radius: 20px; padding: 30px; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.03); transition: transform 0.3s; text-decoration: none; display: block;}
+    .cat-item-{{ section.id }}:hover { transform: translateY(-10px); }
+    .cat-icon-{{ section.id }} { font-size: 50px; margin-bottom: 15px; display: block; }
+    .cat-item-{{ section.id }} span { font-size: 20px; font-weight: 700; color: #2C3E50; }
+
+    @media (max-width: 768px) {
+        .section-header-{{ section.id }} { padding: 20px 20px 10px; }
+        .section-header-{{ section.id }} h3 { font-size: 20px; }
+        .section-header-{{ section.id }} a { font-size: 14px; }
+        
+        .cat-container-{{ section.id }} { display: flex; overflow-x: auto; gap: 15px; padding: 0 20px 10px; scroll-snap-type: x mandatory; scrollbar-width: none; }
+        .cat-container-{{ section.id }}::-webkit-scrollbar { display: none; }
+        .cat-item-{{ section.id }} { flex: 0 0 calc(33% - 10px); scroll-snap-align: start; padding: 10px; background: transparent; box-shadow: none; display: flex; flex-direction: column; align-items: center; gap: 5px; }
+        .cat-icon-{{ section.id }} { font-size: 30px; width: 65px; height: 65px; background: white; border-radius: 18px; display: flex; justify-content: center; align-items: center; box-shadow: 0 4px 10px rgba(0,0,0,0.04); margin-bottom: 0; }
+        .cat-item-{{ section.id }} span { font-size: 13px; }
+    }
+</style>
+
+<div class="pawnest-cats-{{ section.id }}">
+    <div class="section-header-{{ section.id }}">
+        <h3>{{ section.settings.title }}</h3>
+        <a href="{{ section.settings.link }}">See All</a>
+    </div>
+    <div class="cat-container-{{ section.id }}">
+        {% for block in section.blocks %}
+            <a href="{{ block.settings.cat_link }}" class="cat-item-{{ section.id }}" {{ block.shopify_attributes }}>
+                <div class="cat-icon-{{ section.id }}">{{ block.settings.icon }}</div>
+                <span>{{ block.settings.title }}</span>
+            </a>
+        {% endfor %}
+    </div>
+</div>
+
+{% schema %}
+{
+  "name": "App-Style Categories",
+  "settings": [
+    { "type": "text", "id": "title", "label": "Title", "default": "Categories" },
+    { "type": "url", "id": "link", "label": "See All Link" },
+    { "type": "color", "id": "bg_color", "label": "Background Color", "default": "#F8F9FA" }
+  ],
+  "blocks": [
+    {
+      "type": "category",
+      "name": "Category",
+      "limit": 6,
+      "settings": [
+        { "type": "text", "id": "icon", "label": "Emoji Icon", "default": "🥩" },
+        { "type": "text", "id": "title", "label": "Category Name", "default": "Pet Food" },
+        { "type": "url", "id": "cat_link", "label": "Category Link" }
+      ]
+    }
+  ],
+  "presets": [
+    { 
+      "name": "App-Style Categories", 
+      "category": "PawNest",
+      "blocks": [ { "type": "category" }, { "type": "category" }, { "type": "category" }, { "type": "category" } ]
+    }
+  ]
+}
+{% endschema %}
