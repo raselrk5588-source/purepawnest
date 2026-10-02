@@ -1,4 +1,4 @@
-﻿{
+{
   "sections": {
     "hero": {
       "type": "pawnest-hero"
@@ -13,7 +13,7 @@
       "type": "pawnest-trust"
     },
     "tips": {
-      "type": "pawnest-tips"
+      "type": "pawnest-protips"
     },
     "newsletter": {
       "type": "pawnest-newsletter"
