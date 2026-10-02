@@ -1,0 +1,145 @@
+<style>
+    .pawnest-tips-{{ section.id }} {
+        padding: 50px 5%;
+        background-color: {{ section.settings.bg_color }};
+        font-family: 'Outfit', sans-serif;
+    }
+    .pawnest-tips-header {
+        text-align: center;
+        margin-bottom: 40px;
+    }
+    .pawnest-tips-title {
+        font-size: 32px;
+        font-weight: 800;
+        color: #2C3E50;
+        margin: 0;
+    }
+    .pawnest-tips-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 25px;
+    }
+    .pawnest-tip-card {
+        background: #fff;
+        border-radius: 16px;
+        padding: 25px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        transition: transform 0.3s ease;
+        position: relative;
+        overflow: hidden;
+    }
+    .pawnest-tip-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+    }
+    .pawnest-tip-icon {
+        font-size: 36px;
+        margin-bottom: 15px;
+        display: inline-block;
+        background: rgba(255, 126, 103, 0.1);
+        padding: 15px;
+        border-radius: 50%;
+        color: #FF7E67;
+    }
+    .pawnest-tip-heading {
+        font-size: 20px;
+        font-weight: 700;
+        color: #2C3E50;
+        margin: 0 0 10px 0;
+    }
+    .pawnest-tip-text {
+        font-size: 15px;
+        color: #7F8C8D;
+        line-height: 1.6;
+        margin: 0;
+    }
+    .pawnest-tip-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 4px;
+        height: 100%;
+        background: #FF7E67;
+    }
+    @media (max-width: 768px) {
+        .pawnest-tips-{{ section.id }} { padding: 40px 20px; }
+        .pawnest-tips-title { font-size: 26px; }
+        .pawnest-tip-card { padding: 20px; }
+    }
+</style>
+
+<div class="pawnest-tips-{{ section.id }}">
+    <div class="pawnest-tips-header">
+        <h2 class="pawnest-tips-title">{{ section.settings.title }}</h2>
+    </div>
+
+    <div class="pawnest-tips-grid">
+        {% for block in section.blocks %}
+            <div class="pawnest-tip-card">
+                <div class="pawnest-tip-icon material-icons-round">{{ block.settings.icon }}</div>
+                <h3 class="pawnest-tip-heading">{{ block.settings.title }}</h3>
+                <p class="pawnest-tip-text">{{ block.settings.text }}</p>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% schema %}
+{
+  "name": "Pro Tips",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section Title",
+      "default": "💡 Pet Care Pro Tips"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#ffffff"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "tip",
+      "name": "Pro Tip",
+      "limit": 6,
+      "settings": [
+        {
+          "type": "text",
+          "id": "icon",
+          "label": "Material Icon Name",
+          "default": "pets",
+          "info": "Find icons at https://fonts.google.com/icons"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Tip Heading",
+          "default": "Nutrition Matters"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Tip Description",
+          "default": "Always check the ingredient list. High-quality protein should be the first ingredient for a healthy pet."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Pro Tips",
+      "category": "PawNest",
+      "blocks": [
+        { "type": "tip" },
+        { "type": "tip", "settings": { "icon": "water_drop", "title": "Hydration is Key", "text": "Ensure your pet always has access to fresh, clean water, especially during hot days." } },
+        { "type": "tip", "settings": { "icon": "monitor_heart", "title": "Regular Checkups", "text": "Visit the vet at least once a year for vaccinations and general health monitoring." } }
+      ]
+    }
+  ]
+}
+{% endschema %}
